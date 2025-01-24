@@ -44,19 +44,25 @@ const RegisterPage = () => {
       {success ? (
         userDetails ? (
           <div  className="mainContainer" >
+               <div className='logosContainer'>
+        <img src="/ujustlogo.png" alt="Logo" className="logo" />
+      </div>
             <div className="UserDetails">
-              <h1 className="welcomeText">Welcome {userDetails[' Name']}</h1>
-              <h2 className="eventName">to UJustBe Universe’s Anniversary Celebration</h2>
+            <div className='logoContainers'>
+            <img src="/Universary.png" alt="Logo" className="logosmall" />
+          </div>
+              <h1 className="welcomeText">Thank you {userDetails[' Name']}</h1>
+              <h2 className="eventName">for registering to the Unniversary Celebration!</h2>
             </div>
-            <div className="eventDetails">
+            {/* <div className="eventDetails">
               <p>Time: 3:00 PM to 7:00 PM</p>
               <h1 className="eventName">Thank You!</h1>
               <h1 className="eventName">for Registering.</h1>
-            </div>
-            <div className="UserDetails">
-            <h1 className="welcomeText">
+            </div> */}
+           
+            <h1 className="detailtext">
             For further details, our support team will get in touch with you.</h1>
-            </div>
+            
             <Link href={`/feedback/${phoneNumber}`}>
             <div className='agenda'>
         <button className="agendabutton">Give Feedback</button>
