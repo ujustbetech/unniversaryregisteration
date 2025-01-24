@@ -1,0 +1,114 @@
+/* Main container styling */
+/* Main container styling */
+body {
+    background-image: url('/space.jpeg');
+    background-size:cover; /* Ensure the image covers the whole page */
+    background-position: center; /* Center the background image */
+    background-repeat: no-repeat; /* Prevent the image from repeating */
+    height: 200vh; /* Full height of the viewport */
+    margin: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+.feedback-form-container {
+    max-width: 700px;
+    margin: 2rem auto;
+    padding: 2rem;
+    background: #f9f9f9;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    font-family: Arial, sans-serif;
+  }
+  
+  /* Heading */
+  .feedback-form-title {
+    text-align: center;
+    margin-bottom: 1.5rem;
+    color: #333;
+    font-size: 1.8rem;
+    font-weight: bold;
+  }
+  
+  /* Question list styling */
+  .feedback-questions {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+  
+  .feedback-question-row {
+    margin-bottom: 1.5rem;
+  }
+  
+  .feedback-question-title {
+    margin-bottom: 0.5rem;
+    color: #555;
+    font-size: 1.2rem;
+  }
+  
+  /* Multiple choice options */
+  .feedback-options label {
+    display: block;
+    margin-bottom: 0.5rem;
+    cursor: pointer;
+    font-size: 1rem;
+    color: #333;
+  }
+  
+  .feedback-options label input[type="checkbox"] {
+    margin-right: 0.5rem;
+  }
+  
+  /* Additional comments textarea */
+  .feedback-comment-box {
+    width: 90%;
+    height: 80px;
+    padding: 0.5rem;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 1rem;
+    color: #333;
+    resize: vertical;
+    box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1);
+  }
+  
+  /* Submit button */
+  .feedback-submit-btn {
+    display: block;
+    width: 100%;
+    padding: 0.8rem;
+    font-size: 1rem;
+    color: #fff;
+    background-color: #007bff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    text-align: center;
+    transition: background-color 0.3s ease;
+  }
+  
+  .feedback-submit-btn:hover {
+    background-color: #0056b3;
+  }
+  
+  /* Responsive styling */
+  @media (max-width: 768px) {
+    .feedback-form-container {
+      padding: 1.5rem;
+    }
+  
+    .feedback-form-title {
+      font-size: 1.5rem;
+    }
+  
+    .feedback-question-title {
+      font-size: 1rem;
+    }
+  
+    .feedback-submit-btn {
+      font-size: 0.9rem;
+    }
+  }
+  
