@@ -42,6 +42,17 @@ body {
   /* margin-bottom: 10px; */
 }
 
+.detailtext{
+  
+    font-size: 1.2rem;
+    color: #e9e9e9;
+    font-family: "Forum", serif;
+    font-weight: 400;
+    text-align: center;
+    /* margin-bottom: 10px; */
+  
+}
+
 /* Event Name */
 .eventName {
   font-size: 1.8rem;
@@ -369,7 +380,12 @@ body {
   right:40px;
   position: relative;
 }
-
+.logoContainers img{
+  width: 50%;
+  z-index: 1;
+  right:-140px;
+  position: relative;
+}
 .logoContainer:before {
   content: "";
   position: absolute;
