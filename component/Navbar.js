@@ -20,7 +20,7 @@ const Navbar = (props) => {
                         {/*  Event */}
                       
                         <li>
-                            <Link href="/admin/event/addEvent">
+                            <Link href=" ">
                                 <span className="icons"><MdEventAvailable /></span>
                                 <span className="linklabel">Orbitors</span>
                                 <span className="submenuIcon"><MdOutlineKeyboardArrowDown /></span>
