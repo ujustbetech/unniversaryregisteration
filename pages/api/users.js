@@ -39,7 +39,7 @@ export default async function handler(req, res) {
         userData.Category = existingCategory; // Use the correct category from the database
       } else {
         // User is a guest, set Category and validate required fields
-        userData.Category = "guest"; // Capitalize the "C" in guest
+        userData.Category = "Guest"; // Capitalize the "C" in guest
         userData["Mobile no"] = phoneNumber; // Save the entered mobile number
 
         if (!userData.Name || !userData.relativeOf) {
