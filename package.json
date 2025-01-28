@@ -3,11 +3,11 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev",
-    "build": "npm install && next build",
-    "start": "next start",
-    "lint": "next lint"
-  },
+  "dev": "next dev",
+  "build": "npm install react-qr-reader --force && next build",
+  "start": "next start",
+  "lint": "next lint"
+},
   "dependencies": {
     "@babel/runtime": "^7.26.7",
     "axios": "^1.7.7",
