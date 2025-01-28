@@ -2,7 +2,7 @@ import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import { db } from "../../firebaseConfig";
 import { doc, getDoc, collection, addDoc, updateDoc } from "firebase/firestore";
-import { QrReader } from "react-qr-reader";
+import QrScanner from "react-qr-scanner";
 import Link from "next/link";
 import "../event.css";
 
@@ -36,7 +36,7 @@ const RegisterPage = () => {
           // Check if the user's attendance has already been marked
           const registrationRef = doc(db, "registerations", phoneNumber);
           const registrationDoc = await getDoc(registrationRef);
-          
+
           if (registrationDoc.exists()) {
             const registrationData = registrationDoc.data();
             if (registrationData.attendance) {
@@ -72,9 +72,9 @@ const RegisterPage = () => {
     }
   }, []);
 
-  const handleScan = async (result, error) => {
-    if (result?.text) {
-      setScannedData(result.text); // Store scanned QR data
+  const handleScan = async (data) => {
+    if (data) {
+      setScannedData(data); // Store scanned QR data
 
       // Mark attendance in Firestore
       const userRef = doc(db, "registerations", phoneNumber);
@@ -92,10 +92,10 @@ const RegisterPage = () => {
         setShowScanner(false); // Close the scanner
       }
     }
+  };
 
-    if (error) {
-      console.error("Error during scanning:", error);
-    }
+  const handleError = (err) => {
+    console.error("Error during scanning:", err);
   };
 
   const ConstantLayout = ({ children }) => {
@@ -145,9 +145,12 @@ const RegisterPage = () => {
               {showScanner && (
                 <div className="qrBox">
                   <div className="scanner-box">
-                    <QrReader
+                    <QrScanner
                       className="scanner-video"
-                      onResult={handleScan}
+                      delay={300}
+                      onScan={handleScan}
+                      onError={handleError}
+                      style={{ width: "100%" }}
                       constraints={{ facingMode: "environment" }}
                     />
                   </div>
@@ -164,7 +167,7 @@ const RegisterPage = () => {
           )}
 
           {/* Div 3: Send Feedback */}
-          {/* {feedbackVisible && (
+          {feedbackVisible && (
             <ConstantLayout>
               <h1 className="welcomeText">Thankyou {userDetails[" Name"]}</h1>
               <h2 className="eventName">for attending the event!</h2>
@@ -177,7 +180,7 @@ const RegisterPage = () => {
                 </div>
               </Link>
             </ConstantLayout>
-          )} */}
+          )}
         </>
       ) : (
         <div className="loader">
