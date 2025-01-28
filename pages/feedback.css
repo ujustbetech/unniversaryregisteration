@@ -1,20 +1,22 @@
 /* Main container styling */
 /* Main container styling */
-body {
-    background-image: url('/space.jpeg');
-    background-size:cover; /* Ensure the image covers the whole page */
-    background-position: center; /* Center the background image */
-    background-repeat: no-repeat; /* Prevent the image from repeating */
-    height: 200vh; /* Full height of the viewport */
-    margin: 0;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
+.feedbackContainer {
+  color: #fff;
+  background: url('/space.jpeg') no-repeat center center fixed;
+  width: 100%;
+  min-height: 100vh;
+  background-size: cover;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  row-gap: 20px;
+  justify-content: center;
+  padding: 20px 0;
+}
 
 .feedback-form-container {
-    max-width: 700px;
-    margin: 2rem auto;
+    max-width: 800px;
+    margin: 0rem auto;
     padding: 2rem;
     background: #f9f9f9;
     border-radius: 10px;
@@ -22,6 +24,16 @@ body {
     font-family: Arial, sans-serif;
   }
   
+  .feedback-logo {
+    width: 100%;
+    max-width: 500px;
+    padding: 20px;
+  }
+
+  .feedback-logo img {
+    width: 100%;
+  }
+
   /* Heading */
   .feedback-form-title {
     text-align: center;
@@ -96,7 +108,7 @@ body {
   /* Responsive styling */
   @media (max-width: 768px) {
     .feedback-form-container {
-      padding: 1.5rem;
+      width: 90%;
     }
   
     .feedback-form-title {
