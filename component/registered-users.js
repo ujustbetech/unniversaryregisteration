@@ -33,7 +33,7 @@ const RegisteredUsers = () => {
       )}
       {!loading && (
         <section className="c-userslist box">
-          <h2>Events Listing</h2>
+          <h2>Registered Users</h2>
           <button className="m-button-5" onClick={() => window.history.back()}>
             Back
           </button>
