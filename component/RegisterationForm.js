@@ -86,15 +86,14 @@ const RegistrationForm = () => {
       return;
     }
   
-    // Prepare user data with formData
-    const registrationData = {
+     // Prepare user data with formData
+     const registrationData = {
       ...userDetails,
       ...formData,
       Name: isGuest ? formData.Name : userDetails?.[" Name"]?.trim(), // Ensure the Name field is populated
       Mobile_no: phoneNumber, // Save phone number for guest users
-      Category: isGuest ? "guest" : userDetails?.Category, // Set category to "guest" for guests
+      Category: isGuest ? "Guest" : userDetails?.Category, // Set category to "guest" for guests
     };
-  
     
     try {
       const response = await fetch("/api/users", {
@@ -232,9 +231,10 @@ const RegistrationForm = () => {
 <li className="form-row">
   <h4><strong>Category:</strong></h4>
   <div className="multipleitem">
-    <p>{userDetails.Category}</p>
+    <p>{isGuest ? "Guest" : userDetails?.Category}</p>
   </div>
 </li>
+
 <li className="form-row">
   <h4><strong>Mobile No:</strong></h4>
   <div className="multipleitem">
@@ -307,7 +307,7 @@ const RegistrationForm = () => {
 <li className="form-row">
             <h4>Game Interest:<sup>*</sup></h4>
             <div className="multipleitem">
-              {["Tug of War", "Carrom", "Cricket", "Musical Chair"].map((game) => (
+              {["Cricket", "Football"].map((game) => (
                 <label key={game}>
                   <input
                     type="checkbox"
@@ -340,67 +340,58 @@ const RegistrationForm = () => {
           </>
         )}
 
-        {isGuest && (
-          <>
-          <li className="form-row">
-          <h4>Name (for Guest):<sup>*</sup></h4>
-            <div className="multipleitem">
-            
-              <input
-                type="text"
-                value={formData.Name}
-                onChange={(e) => setFormData({ ...formData, Name: e.target.value })}
-                required
-                placeholder="Enter guest name"
-              />
-            </div>
-        </li>
-        <li className="form-row">
-    <h4>Connect of:<sup>*</sup></h4>
-    <div className="multipleitem">
-              
-              <input
-                type="text"
-                value={formData.relativeOf}
-                onChange={(e) =>
-                  setFormData({ ...formData, relativeOf: e.target.value })
-                }
-                required
-                placeholder="Enter Connect's name"
-              />
-            </div>
-            </li>
-            <li className="form-row">
-                  <h4>
-                    Date of Birth:<sup>*</sup>
-                  </h4>
-                  <div className="multipleitem">
-                    <input
-                      type="date"
-                      value={formData.dob}
-                      onChange={(e) =>
-                        setFormData({ ...formData, dob: e.target.value })
-                      }
-                      required
-                    />
-                  </div>
-                </li>
-                <li className="form-row">
-                  <h4>
-                    Email:<sup>*</sup>
-                  </h4>
-                  <div className="multipleitem">
-                    <input
-                      type="text"
-                      value={formData.email}
-                      onChange={(e) =>
-                        setFormData({ ...formData, email: e.target.value })
-                      }
-                      required
-                      placeholder="Enter email address"
-                    />
-                  </div>
-                </li>
+{isGuest && (
+  <>
+    <li className="form-row">
+      <h4>Name:<sup>*</sup></h4>
+      <div className="multipleitem">
+        <input
+          type="text"
+          value={formData.Name}
+          onChange={(e) => setFormData({ ...formData, Name: e.target.value })}
+          required
+          placeholder="Enter your name"
+        />
+      </div>
+    </li>
+    <li className="form-row">
+      <h4>Relative Of:<sup>*</sup></h4>
+      <div className="multipleitem">
+        <input
+          type="text"
+          value={formData.relativeOf}
+          onChange={(e) =>
+            setFormData({ ...formData, relativeOf: e.target.value })
+          }
+          required
+          placeholder="Enter relative's name"
+        />
+      </div>
+    </li>
+    <li className="form-row">
+      <h4>DOB:<sup>*</sup></h4>
+      <div className="multipleitem">
+        <input
+          type="date"
+          value={formData.dob}
+          onChange={(e) => setFormData({ ...formData, dob: e.target.value })}
+          required
+        />
+      </div>
+    </li>
+    <li className="form-row">
+      <h4>Email:<sup>*</sup></h4>
+      <div className="multipleitem">
+        <input
+          type="email"
+          value={formData.email}
+          onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+          required
+          placeholder="Enter your email"
+        />
+      </div>
+    </li>
+
             <li className="form-row">
     <h4>Location Name:<sup>*</sup></h4>
     <div className="multipleitem">
@@ -449,7 +440,7 @@ const RegistrationForm = () => {
 <li className="form-row">
             <h4>Game Interest:<sup>*</sup></h4>
             <div className="multipleitem">
-              {["Tug of War", "Carrom", "Cricket", "Musical Chair"].map((game) => (
+            {["Cricket", "Football"].map((game) => (
                 <label key={game}>
                   <input
                     type="checkbox"
