@@ -5,6 +5,7 @@ import { doc, getDoc, collection, addDoc, updateDoc } from "firebase/firestore";
 import QrScanner from "react-qr-scanner";
 import Link from "next/link";
 import "../event.css";
+import Swal from "sweetalert2";
 
 const RegisterPage = () => {
   const router = useRouter();
@@ -70,10 +71,12 @@ const RegisterPage = () => {
     }
   }, []);
 
+
+  // In your handleScan function
   const handleScan = async (data) => {
     if (data) {
       setScannedData(data);
-
+  
       // Mark attendance
       const userRef = doc(db, "registerations", phoneNumber);
       try {
@@ -81,16 +84,30 @@ const RegisterPage = () => {
           attendance: true,
           scanTime: new Date().toISOString(),
         });
-        alert("Attendance marked successfully!");
+  
+        // Use SweetAlert to show a success message
+        Swal.fire({
+          title: 'Attendance marked successfully!',
+          text: 'Thank you for attending the event.',
+          icon: 'success',
+          confirmButtonText: 'OK',
+        });
+  
         setFeedbackVisible(true);
       } catch (err) {
         console.error("Error marking attendance:", err);
-        alert("Failed to mark attendance.");
+        Swal.fire({
+          title: 'Failed to mark attendance.',
+          text: 'There was an issue marking your attendance. Please try again.',
+          icon: 'error',
+          confirmButtonText: 'OK',
+        });
       } finally {
         setShowScanner(false);
       }
     }
   };
+  
 
   const handleError = (err) => {
     console.error("Error during scanning:", err);
