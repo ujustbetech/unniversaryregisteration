@@ -164,7 +164,7 @@ const RegisterPage = () => {
           )}
 
           {/* Div 3: Send Feedback */}
-          {feedbackVisible && (
+          {/* {feedbackVisible && (
             <ConstantLayout>
               <h1 className="welcomeText">Thankyou {userDetails[" Name"]}</h1>
               <h2 className="eventName">for attending the event!</h2>
@@ -177,7 +177,7 @@ const RegisterPage = () => {
                 </div>
               </Link>
             </ConstantLayout>
-          )}
+          )} */}
         </>
       ) : (
         <div className="loader">
