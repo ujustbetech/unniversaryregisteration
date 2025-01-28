@@ -33,7 +33,7 @@ const RegisteredUsers = () => {
       )}
       {!loading && (
         <section className="c-userslist box">
-          <h2>Registered Users</h2>
+          <h2>Events Listing</h2>
           <button className="m-button-5" onClick={() => window.history.back()}>
             Back
           </button>
@@ -49,18 +49,27 @@ const RegisteredUsers = () => {
                   <th>Category</th>
                   <th>Location</th>
                   <th>Game Interest</th>
+                  <th>Status</th> {/* New column for Attendance Status */}
                 </tr>
               </thead>
               <tbody>
                 {users.map((user, index) => (
                   <tr key={index}>
                     <td>
-                      {user.Category === "guest" ? user.Name : user[" Name"] || "N/A"}
+                      {user.Category === "Guest" ? user.Name : user[" Name"] || "N/A"}
                     </td>
                     <td>{user["Mobile no"]}</td>
                     <td>{user.Category}</td>
                     <td>{user.locationType}</td>
                     <td>{user.gameInterest ? user.gameInterest.join(", ") : "N/A"}</td>
+                    <td>
+                      {/* Check attendance field */}
+                      {user.attendance ? (
+                        <span className="text-green-600 font-bold">Present</span>
+                      ) : (
+                        <span className="text-red-600 font-bold">Absent</span>
+                      )}
+                    </td>
                   </tr>
                 ))}
               </tbody>
