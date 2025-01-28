@@ -9,44 +9,45 @@ import "../event.css";
 const RegisterPage = () => {
   const router = useRouter();
   const { phoneNumber } = router.query;
-  const [success, setSuccess] = useState(false); // Tracks if the user has registered
-  const [userDetails, setUserDetails] = useState(null); // Stores user details
-  const [attendanceMarked, setAttendanceMarked] = useState(false); // Tracks if attendance is marked
-  const [showScanner, setShowScanner] = useState(false); // Toggles the QR scanner
-  const [scannedData, setScannedData] = useState(null); // Stores scanned QR data
-  const [isAllowedDate, setIsAllowedDate] = useState(false); // Tracks if the current date matches 30/01/2025
-  const [feedbackVisible, setFeedbackVisible] = useState(false); // Tracks if feedback should be visible
+  const [success, setSuccess] = useState(false);
+  const [userDetails, setUserDetails] = useState(null);
+  const [attendanceMarked, setAttendanceMarked] = useState(false);
+  const [showScanner, setShowScanner] = useState(false);
+  const [scannedData, setScannedData] = useState(null);
+  const [isAllowedDate, setIsAllowedDate] = useState(false);
+  const [feedbackVisible, setFeedbackVisible] = useState(false);
+  const [cameraError, setCameraError] = useState("");
 
   useEffect(() => {
     const registerUser = async () => {
       try {
-        // Add the registration data to Firestore
+        // Register the user in Firestore
         await addDoc(collection(db, "registration"), {
           phoneNumber: phoneNumber,
           registrationTime: new Date(),
         });
 
-        // Fetch user details from the 'userdetails' collection
+        // Fetch user details
         const userRef = doc(db, "userdetails", phoneNumber);
         const userDoc = await getDoc(userRef);
 
         if (userDoc.exists()) {
-          setUserDetails(userDoc.data()); // Set user details if document exists
+          setUserDetails(userDoc.data());
 
-          // Check if the user's attendance has already been marked
+          // Check attendance
           const registrationRef = doc(db, "registerations", phoneNumber);
           const registrationDoc = await getDoc(registrationRef);
 
           if (registrationDoc.exists()) {
             const registrationData = registrationDoc.data();
             if (registrationData.attendance) {
-              setAttendanceMarked(true); // If attendance is true, mark attendance as done
-              setFeedbackVisible(true); // Show feedback section immediately
+              setAttendanceMarked(true);
+              setFeedbackVisible(true);
             }
           }
         }
 
-        setSuccess(true); // Registration successful
+        setSuccess(true);
       } catch (err) {
         console.error("Error registering user:", err);
       }
@@ -58,25 +59,22 @@ const RegisterPage = () => {
   }, [phoneNumber]);
 
   useEffect(() => {
-    // Define the allowed date for the scanner
-    const allowedDate = new Date("2025-02-15"); // Target date
+    const allowedDate = new Date("2025-01-28");
     const today = new Date();
-
-    // Check if today's date matches the allowed date
     if (
       today.getFullYear() === allowedDate.getFullYear() &&
       today.getMonth() === allowedDate.getMonth() &&
       today.getDate() === allowedDate.getDate()
     ) {
-      setIsAllowedDate(true); // Enable the scanner on the allowed date
+      setIsAllowedDate(true);
     }
   }, []);
 
   const handleScan = async (data) => {
     if (data) {
-      setScannedData(data); // Store scanned QR data
+      setScannedData(data);
 
-      // Mark attendance in Firestore
+      // Mark attendance
       const userRef = doc(db, "registerations", phoneNumber);
       try {
         await updateDoc(userRef, {
@@ -84,18 +82,23 @@ const RegisterPage = () => {
           scanTime: new Date().toISOString(),
         });
         alert("Attendance marked successfully!");
-        setFeedbackVisible(true); // Show feedback section
+        setFeedbackVisible(true);
       } catch (err) {
         console.error("Error marking attendance:", err);
         alert("Failed to mark attendance.");
       } finally {
-        setShowScanner(false); // Close the scanner
+        setShowScanner(false);
       }
     }
   };
 
   const handleError = (err) => {
     console.error("Error during scanning:", err);
+    setCameraError(
+      err?.name === "NotAllowedError"
+        ? "Camera access denied. Please allow camera access in your browser."
+        : "Error accessing the camera. Try refreshing the page or use a different device."
+    );
   };
 
   const ConstantLayout = ({ children }) => {
@@ -121,12 +124,13 @@ const RegisterPage = () => {
           {/* Div 1: After Registration */}
           {!isAllowedDate && !feedbackVisible && !attendanceMarked && (
             <ConstantLayout>
-              <h1 className="welcomeText">Thank you {userDetails[" Name"]}</h1>
+              <h1 className="welcomeText">Thank you {userDetails?.[" Name"]}</h1>
               <h2 className="eventName">
                 for registering to the Unniversary Celebration!
               </h2>
               <h1 className="detailtext">
-                For further details, our support team will get in touch with you.
+                For further details, our support team will get in touch with
+                you.
               </h1>
             </ConstantLayout>
           )}
@@ -134,7 +138,7 @@ const RegisterPage = () => {
           {/* Div 2: Open Scanner on 30/01/2025 */}
           {isAllowedDate && !feedbackVisible && !attendanceMarked && (
             <ConstantLayout>
-              <h1 className="welcomeText">Welcome {userDetails[" Name"]}</h1>
+              <h1 className="welcomeText">Welcome {userDetails?.[" Name"]}</h1>
               <h2 className="eventName">to the Unniversary Celebration!</h2>
               <button
                 onClick={() => setShowScanner(true)}
@@ -145,14 +149,23 @@ const RegisterPage = () => {
               {showScanner && (
                 <div className="qrBox">
                   <div className="scanner-box">
-                    <QrScanner
-                      className="scanner-video"
-                      delay={300}
-                      onScan={handleScan}
-                      onError={handleError}
-                      style={{ width: "100%" }}
-                      constraints={{ facingMode: "environment" }}
-                    />
+                    {cameraError ? (
+                      <p className="error-text">{cameraError}</p>
+                    ) : (
+                      <QrScanner
+  delay={300}
+  onScan={handleScan}
+  onError={(err) => {
+    console.error("Error during scanning:", err);
+    alert(`Scanning error: ${err.message}`);
+  }}
+  style={{ width: "100%" }}
+  constraints={{
+    video: { facingMode: "environment" }, // Explicitly request video
+  }}
+/>
+
+                    )}
                   </div>
                   <p className="scanner-text">Scan the QR code</p>
                   <button
@@ -169,7 +182,7 @@ const RegisterPage = () => {
           {/* Div 3: Send Feedback */}
           {feedbackVisible && (
             <ConstantLayout>
-              <h1 className="welcomeText">Thankyou {userDetails[" Name"]}</h1>
+              <h1 className="welcomeText">Thankyou {userDetails?.[" Name"]}</h1>
               <h2 className="eventName">for attending the event!</h2>
               <h1 className="detailtext">
                 Please give your valuable feedback.
