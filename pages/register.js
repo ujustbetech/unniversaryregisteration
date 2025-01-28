@@ -85,13 +85,13 @@ const EventRegistrationPage = () => {
 
   return (
     <div className='mainContainer'>
-      <div className='logosContainer'>
-        <img src="/ujustlogo.png" alt="Logo" className="logo" />
+      <div className='ujb_logo'>
+        <img src="/ujustlogo.png" alt="Logo" />
       </div>
       <div className="signin">
         <div className="loginInput">
           <div className='logoContainer'>
-            <img src="/Universary.png" alt="Logo" className="logos" />
+            <img src="/Universary.png" alt="Logo" />
           </div>
           <form onSubmit={handleRegister}>
             <ul>
