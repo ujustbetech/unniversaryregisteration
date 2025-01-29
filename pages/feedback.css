@@ -24,15 +24,14 @@
     font-family: Arial, sans-serif;
   }
   
-  .feedback-logo {
-    width: 100%;
-    max-width: 500px;
-    padding: 20px;
+  .feedback_logo {
+    width: 200px;
   }
-
-  .feedback-logo img {
+  
+  .feedback_logo img {
     width: 100%;
   }
+  
 
   /* Heading */
   .feedback-form-title {
