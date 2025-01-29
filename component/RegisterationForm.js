@@ -78,15 +78,9 @@ const RegistrationForm = () => {
       return;
     }
   
-    // Combine custom game into gameInterest if "Other" is selected
-    const gameInterest = formData.gameInterest.includes("Other")
-      ? [...formData.gameInterest.filter((g) => g !== "Other"), formData.customGame]
-      : formData.gameInterest;
-  
     const registrationData = {
       ...userDetails,
       ...formData,
-      gameInterest,
       Name: isGuest ? formData.Name : userDetails?.[" Name"]?.trim(),
       Mobile_no: phoneNumber,
       Category: isGuest ? "Guest" : userDetails?.Category,
@@ -285,7 +279,7 @@ const RegistrationForm = () => {
 <li className="form-row">
   <h4>Game Interest:<sup>*</sup></h4>
   <div className="multipleitem">
-    {["Cricket", "Football", "Other"].map((game) => (
+    {["Cricket", "Football", "None"].map((game) => (
       <label key={game} style={{ marginRight: "10px" }}>
         <input
           type="checkbox"
@@ -295,20 +289,6 @@ const RegistrationForm = () => {
         {game}
       </label>
     ))}
-    {/* Show input field when "Other" is selected */}
-    {formData.gameInterest.includes("Other") && (
-      <div style={{ marginTop: "10px" }}>
-        <input
-          type="text"
-          placeholder="Enter custom game"
-          value={formData.customGame || ""}
-          onChange={(e) =>
-            setFormData({ ...formData, customGame: e.target.value })
-          }
-          required
-        />
-      </div>
-    )}
   </div>
 </li>
 
@@ -446,7 +426,7 @@ const RegistrationForm = () => {
 <li className="form-row">
   <h4>Game Interest:<sup>*</sup></h4>
   <div className="multipleitem">
-    {["Cricket", "Football", "Other"].map((game) => (
+    {["Cricket", "Football", "None"].map((game) => (
       <label key={game} style={{ marginRight: "10px" }}>
         <input
           type="checkbox"
@@ -456,22 +436,9 @@ const RegistrationForm = () => {
         {game}
       </label>
     ))}
-    {/* Show input field when "Other" is selected */}
-    {formData.gameInterest.includes("Other") && (
-      <div style={{ marginTop: "10px" }}>
-        <input
-          type="text"
-          placeholder="Enter custom game"
-          value={formData.customGame || ""}
-          onChange={(e) =>
-            setFormData({ ...formData, customGame: e.target.value })
-          }
-          required
-        />
-      </div>
-    )}
   </div>
 </li>
+
 
 <li className="form-row">
     <h4>Achievements or Skills<sup>*</sup></h4>
