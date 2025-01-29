@@ -11,6 +11,7 @@ const RegistrationForm = () => {
     specialMoment: "",
     gameInterest: [],
     achievements: "",
+    skills: "",
     Name: "", // Use Name (capital N) for both guest and non-guest
     relativeOf: "",
     dob: "",
@@ -312,14 +313,27 @@ const RegistrationForm = () => {
 </li>
 
 <li className="form-row">
-    <h4>Achievements or Skills<sup>*</sup></h4>
+    <h4>Achievements <sup>*</sup></h4>
     <div className="multipleitem">
               
               <textarea
-                placeholder="Describe your achievements or skills..."
+                placeholder="Describe your achievements..."
                 value={formData.achievements}
                 onChange={(e) =>
                   setFormData({ ...formData, achievements: e.target.value })
+                }
+              />
+            </div>
+</li>
+<li className="form-row">
+    <h4>Skills<sup>*</sup></h4>
+    <div className="multipleitem">
+              
+              <textarea
+                placeholder="Describe your skills..."
+                value={formData.skills}
+                onChange={(e) =>
+                  setFormData({ ...formData, skills: e.target.value })
                 }
               />
             </div>
@@ -347,7 +361,7 @@ const RegistrationForm = () => {
       </div>
     </li>
     <li className="form-row">
-      <h4>Relative Of:<sup>*</sup></h4>
+      <h4>Connect Of:<sup>*</sup></h4>
       <div className="multipleitem">
         <input
           type="text"
@@ -468,6 +482,19 @@ const RegistrationForm = () => {
                 value={formData.achievements}
                 onChange={(e) =>
                   setFormData({ ...formData, achievements: e.target.value })
+                }
+              />
+            </div>
+</li>
+<li className="form-row">
+    <h4>Skills<sup>*</sup></h4>
+    <div className="multipleitem">
+              
+              <textarea
+                placeholder="Describe your skills..."
+                value={formData.skills}
+                onChange={(e) =>
+                  setFormData({ ...formData, skills: e.target.value })
                 }
               />
             </div>
