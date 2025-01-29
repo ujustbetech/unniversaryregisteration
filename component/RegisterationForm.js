@@ -50,15 +50,6 @@ const RegistrationForm = () => {
   const handleFormSubmit = async (e) => {
     e.preventDefault();
   
-    if (isGuest) {
-      // Ensure name and relativeOf are provided for guests
-      if (!formData.Name || !formData.relativeOf || !formData.locationName) {
-        alert("Please provide name and relative's information for guest users.");
-        return;
-      }
-    }
-  
-    // Validation: Ensure all required fields are filled
     const requiredFields = [
       "locationType",
       "locationName",
@@ -80,21 +71,26 @@ const RegistrationForm = () => {
         return;
       }
     }
-
+  
     if (isGuest && !/\S+@\S+\.\S+/.test(formData.email)) {
       alert("Please enter a valid email address.");
       return;
     }
   
-     // Prepare user data with formData
-     const registrationData = {
+    // Combine custom game into gameInterest if "Other" is selected
+    const gameInterest = formData.gameInterest.includes("Other")
+      ? [...formData.gameInterest.filter((g) => g !== "Other"), formData.customGame]
+      : formData.gameInterest;
+  
+    const registrationData = {
       ...userDetails,
       ...formData,
-      Name: isGuest ? formData.Name : userDetails?.[" Name"]?.trim(), // Ensure the Name field is populated
-      Mobile_no: phoneNumber, // Save phone number for guest users
-      Category: isGuest ? "Guest" : userDetails?.Category, // Set category to "guest" for guests
+      gameInterest,
+      Name: isGuest ? formData.Name : userDetails?.[" Name"]?.trim(),
+      Mobile_no: phoneNumber,
+      Category: isGuest ? "Guest" : userDetails?.Category,
     };
-    
+  
     try {
       const response = await fetch("/api/users", {
         method: "PUT",
@@ -104,32 +100,12 @@ const RegistrationForm = () => {
           userData: registrationData,
         }),
       });
-
+  
       if (response.ok) {
         alert("User registered successfully!");
-
-        // Send WhatsApp message
         await sendWhatsAppMessage(phoneNumber, registrationData);
-
-        // Send email
-        const emailRecipient = isGuest ? formData.email : userDetails?.Email;
-        await sendEmail(emailRecipient, registrationData);
-
-        // Reset form after submission
-        setPhoneNumber("");
-        setFormData({
-          locationType: "",
-          locationName: "",
-          specialMoment: "",
-          gameInterest: [],
-          achievements: "",
-          Name: "",
-          relativeOf: "",
-          dob: "",
-          email: "",
-        });
-        setUserDetails(null);
-        setIsGuest(false);
+        await sendEmail(isGuest ? formData.email : userDetails?.Email, registrationData);
+        resetForm();
       } else {
         alert("Failed to register user.");
       }
@@ -137,6 +113,7 @@ const RegistrationForm = () => {
       console.error("Error registering user:", error);
     }
   };
+  
 
   const sendWhatsAppMessage = async (phoneNumber, userDetails) => {
     try {
@@ -305,20 +282,35 @@ const RegistrationForm = () => {
             </div>
 </li>
 <li className="form-row">
-            <h4>Game Interest:<sup>*</sup></h4>
-            <div className="multipleitem">
-              {["Cricket", "Football"].map((game) => (
-                <label key={game}>
-                  <input
-                    type="checkbox"
-                    checked={formData.gameInterest.includes(game)}
-                    onChange={() => handleCheckboxChange(game)}
-                  />
-                  {game}
-                </label>
-              ))}
-            </div>
-          </li>
+  <h4>Game Interest:<sup>*</sup></h4>
+  <div className="multipleitem">
+    {["Cricket", "Football", "Other"].map((game) => (
+      <label key={game} style={{ marginRight: "10px" }}>
+        <input
+          type="checkbox"
+          checked={formData.gameInterest.includes(game)}
+          onChange={() => handleCheckboxChange(game)}
+        />
+        {game}
+      </label>
+    ))}
+    {/* Show input field when "Other" is selected */}
+    {formData.gameInterest.includes("Other") && (
+      <div style={{ marginTop: "10px" }}>
+        <input
+          type="text"
+          placeholder="Enter custom game"
+          value={formData.customGame || ""}
+          onChange={(e) =>
+            setFormData({ ...formData, customGame: e.target.value })
+          }
+          required
+        />
+      </div>
+    )}
+  </div>
+</li>
+
 <li className="form-row">
     <h4>Achievements or Skills<sup>*</sup></h4>
     <div className="multipleitem">
@@ -438,20 +430,35 @@ const RegistrationForm = () => {
             </div>
 </li>
 <li className="form-row">
-            <h4>Game Interest:<sup>*</sup></h4>
-            <div className="multipleitem">
-            {["Cricket", "Football"].map((game) => (
-                <label key={game}>
-                  <input
-                    type="checkbox"
-                    checked={formData.gameInterest.includes(game)}
-                    onChange={() => handleCheckboxChange(game)}
-                  />
-                  {game}
-                </label>
-              ))}
-            </div>
-          </li>
+  <h4>Game Interest:<sup>*</sup></h4>
+  <div className="multipleitem">
+    {["Cricket", "Football", "Other"].map((game) => (
+      <label key={game} style={{ marginRight: "10px" }}>
+        <input
+          type="checkbox"
+          checked={formData.gameInterest.includes(game)}
+          onChange={() => handleCheckboxChange(game)}
+        />
+        {game}
+      </label>
+    ))}
+    {/* Show input field when "Other" is selected */}
+    {formData.gameInterest.includes("Other") && (
+      <div style={{ marginTop: "10px" }}>
+        <input
+          type="text"
+          placeholder="Enter custom game"
+          value={formData.customGame || ""}
+          onChange={(e) =>
+            setFormData({ ...formData, customGame: e.target.value })
+          }
+          required
+        />
+      </div>
+    )}
+  </div>
+</li>
+
 <li className="form-row">
     <h4>Achievements or Skills<sup>*</sup></h4>
     <div className="multipleitem">
