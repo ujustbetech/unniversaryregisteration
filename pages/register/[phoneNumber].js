@@ -18,6 +18,8 @@ const RegisterPage = () => {
   const [isAllowedDate, setIsAllowedDate] = useState(false);
   const [feedbackVisible, setFeedbackVisible] = useState(false);
   const [cameraError, setCameraError] = useState("");
+  const [isDisabled, setIsDisabled] = useState(true);
+
 
   useEffect(() => {
     const registerUser = async () => {
@@ -60,7 +62,7 @@ const RegisterPage = () => {
   }, [phoneNumber]);
 
   useEffect(() => {
-    const allowedDate = new Date("2025-02-15");
+    const allowedDate = new Date("2025-02-13");
     const today = new Date();
     if (
       today.getFullYear() === allowedDate.getFullYear() &&
@@ -72,7 +74,6 @@ const RegisterPage = () => {
   }, []);
 
 
-  // In your handleScan function
   const handleScan = async (data) => {
     if (data) {
       setScannedData(data);
@@ -108,6 +109,22 @@ const RegisterPage = () => {
     }
   };
   
+ 
+
+  useEffect(() => {
+    const targetIST = new Date("2025-02-13T18:00:00+05:30"); // 6:00 PM IST
+    const checkTime = () => {
+      const now = new Date(); // Current time (UTC)
+      if (now >= targetIST) {
+        setIsDisabled(false);
+      }
+    };
+
+    checkTime(); // Check initially
+    const interval = setInterval(checkTime, 1000); // Check every second
+
+    return () => clearInterval(interval); // Cleanup
+  }, []);
 
   const handleError = (err) => {
     console.error("Error during scanning:", err);
@@ -206,8 +223,12 @@ const RegisterPage = () => {
               </h1>
               <Link href={`/feedback/${phoneNumber}`}>
                 <div className="agenda">
-                  <button className="agendabutton">Send Feedback</button>
+                <button className="agendabutton" disabled={isDisabled}>
+      {isDisabled ? "Wait till 6:00 PM" : "Send Feedback"}
+    </button>
                 </div>
+               
+
               </Link>
             </ConstantLayout>
           )}
