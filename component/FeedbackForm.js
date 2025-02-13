@@ -13,6 +13,8 @@ const FeedbackForm = () => {
 
   const [userName, setUserName] = useState(""); // Store user name
   const [loading, setLoading] = useState(true); // Loading state
+  const [error, setError] = useState(null); // Store error messages
+  const [feedback, setFeedback] = useState({ comment: "" });
 
   useEffect(() => {
     const fetchUserName = async () => {
@@ -36,36 +38,61 @@ const FeedbackForm = () => {
   }, [phoneNumber]);
 
   const questions = [
-    { id: "q1", text: "How satisfied are you with the event?", options: ["Very Satisfied", "Satisfied", "Neutral", "Dissatisfied"] },
-    { id: "q2", text: "How was the quality of the speakers?", options: ["Excellent", "Good", "Average", "Poor"] },
-    { id: "q3", text: "Was the event organized well?", options: ["Yes", "Mostly", "Somewhat", "No"] },
-    { id: "q4", text: "Would you attend another event like this?", options: ["Definitely", "Maybe", "Not Sure", "No"] },
-    { id: "q5", text: "How likely are you to recommend this event to others?", options: ["Very Likely", "Likely", "Neutral", "Unlikely"] },
+    { id: "q1", text: "How did you like the event overall?", options: [
+      "Absolutely amazing – I’m ready for next year already! 🎊",
+      "Loved it! But can someone pass me a water bottle? 🏃‍♂️💦",
+      "It was good, but my team deserved to win! 🏆😜",
+      "Meh… Next time, add a DJ, fireworks, and a unicorn! 🦄🔥🎶"
+    ]},
+    { id: "q2", text: "How was the game experience?", options: [
+      "Super fun! I may have discovered my hidden sports talent! 🤩",
+      "Great, but I should have trained more! 🏋️‍♂️",
+      "Enjoyed watching more than playing – commentator material here! 🎙️😆",
+      "Where was the referee when I needed them?! 🤨⚖️"
+    ]},
+    { id: "q3", text: "Have you connected or built relationships with other Orbiters?", options: [
+      "Yes! I made some great connections and can’t wait to collaborate! 🤝",
+      "Yes, but I wish we had more structured engagement activities! 🎤👥",
+      "A little bit, but I mostly stuck with people I already knew! 🏡",
+      "No, I was too focused on winning the games! 🏆😆"
+    ]},
+    { id: "q4", text: "Would you attend the next UJustBe's next events?", options: [
+      "100% – Book my slot already! 📅🔥",
+      "Yes, if there’s a post-game pizza party! 🍕",
+      "Maybe… can I be the referee instead? 🤔",
+      "Only if I don’t have to run too much! 🏃‍♂️💨"
+    ]}
   ];
 
-  const [feedback, setFeedback] = useState(
-    questions.reduce((acc, question) => {
-      acc[question.id] = [];
-      return acc;
-    }, { comment: "" })
-  );
-
+  // Handle radio button selection (single selection)
   const handleChange = (questionId, option) => {
-    setFeedback((prev) => {
-      const selectedOptions = prev[questionId];
-      return {
-        ...prev,
-        [questionId]: selectedOptions.includes(option)
-          ? selectedOptions.filter((opt) => opt !== option)
-          : [...selectedOptions, option],
-      };
-    });
+    setFeedback((prev) => ({
+      ...prev,
+      [questionId]: option,
+    }));
   };
 
+  // Handle comment input change
   const handleCommentChange = (e) => {
     setFeedback((prev) => ({ ...prev, comment: e.target.value }));
   };
 
+  // Validate feedback before submission
+  const validateFeedback = () => {
+    for (const question of questions) {
+      if (!feedback[question.id]) {
+        Swal.fire({
+          icon: "warning",
+          title: "Incomplete Feedback",
+          text: `Please answer: '${question.text}'`,
+        });
+        return false;
+      }
+    }
+    return true;
+  };
+
+  // Send WhatsApp message
   const sendWhatsAppMessage = async (userName, phoneNumber) => {
     try {
       const response = await fetch("/api/SendThankyou", {
@@ -93,6 +120,7 @@ const FeedbackForm = () => {
     }
   };
 
+  // Submit feedback to Firestore
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -104,6 +132,8 @@ const FeedbackForm = () => {
       });
       return;
     }
+
+    if (!validateFeedback()) return; // Stop submission if validation fails
 
     try {
       const registrationRef = doc(db, "registerations", phoneNumber);
@@ -138,6 +168,7 @@ const FeedbackForm = () => {
       </div>
       <div className="feedback-form-container">
         <h2 className="feedback-form-title">Feedback Form</h2>
+        {error && <p className="error-message">{error}</p>} {/* Display error messages */}
         <form onSubmit={handleSubmit}>
           <ul className="feedback-questions">
             {questions.map((question) => (
@@ -147,9 +178,10 @@ const FeedbackForm = () => {
                   {question.options.map((option, i) => (
                     <label key={i}>
                       <input
-                        type="checkbox"
+                        type="radio" // ✅ Changed to radio button (single select)
+                        name={question.id}
                         value={option}
-                        checked={feedback[question.id].includes(option)}
+                        checked={feedback[question.id] === option}
                         onChange={() => handleChange(question.id, option)}
                       />
                       {option}
@@ -158,9 +190,9 @@ const FeedbackForm = () => {
                 </div>
               </li>
             ))}
-            <li className="feedback-question-row">
+             <li className="feedback-question-row">
               <div className="feedback-options">
-                <h3 className="feedback-question-title">Additional Comments</h3>
+                <h3 className="feedback-question-title">Overall feedback or shoutouts? (Type away! 🚀)</h3>
                 <textarea
                   className="feedback-comment-box"
                   value={feedback.comment}
