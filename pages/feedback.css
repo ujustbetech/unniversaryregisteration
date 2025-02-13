@@ -1,5 +1,4 @@
 /* Main container styling */
-/* Main container styling */
 .feedbackContainer {
   color: #fff;
   background: url('/space.jpeg') no-repeat center center fixed;
@@ -9,117 +8,131 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  row-gap: 20px;
+  row-gap: 30px; /* Increased spacing between elements */
   justify-content: center;
-  padding: 20px 0;
+  padding: 40px 0;
 }
 
+/* Form container with better spacing */
 .feedback-form-container {
-    max-width: 800px;
-    margin: 0rem auto;
-    padding: 2rem;
-    background: #f9f9f9;
-    border-radius: 10px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    font-family: Arial, sans-serif;
-  }
-  
-  .feedback_logo {
-    width: 200px;
-  }
-  
-  .feedback_logo img {
-    width: 100%;
-  }
-  
+  max-width: 800px;
+  margin: 1.5rem auto; /* More margin to avoid tight fit */
+  padding: 2.5rem;
+  background: #f9f9f9;
+  border-radius: 12px;
+  box-shadow: 0 6px 10px rgba(0, 0, 0, 0.15);
+  font-family: Arial, sans-serif;
+}
 
-  /* Heading */
-  .feedback-form-title {
-    text-align: center;
-    margin-bottom: 1.5rem;
-    color: #333;
-    font-size: 1.8rem;
-    font-weight: bold;
-  }
-  
-  /* Question list styling */
-  .feedback-questions {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-  }
-  
-  .feedback-question-row {
-    margin-bottom: 1.5rem;
-  }
-  
-  .feedback-question-title {
-    margin-bottom: 0.5rem;
-    color: #555;
-    font-size: 1.2rem;
-  }
-  
-  /* Multiple choice options */
-  .feedback-options label {
-    display: block;
-    margin-bottom: 0.5rem;
-    cursor: pointer;
-    font-size: 1rem;
-    color: #333;
-  }
-  
-  .feedback-options label input[type="checkbox"] {
-    margin-right: 0.5rem;
-  }
-  
-  /* Additional comments textarea */
-  .feedback-comment-box {
+/* Logo */
+.feedback_logo {
+  width: 220px;
+  margin-bottom: 15px; /* Added margin for space */
+}
+
+.feedback_logo img {
+  width: 100%;
+}
+
+/* Heading */
+.feedback-form-title {
+  text-align: center;
+  margin-bottom: 2rem; /* Increased margin for spacing */
+  color: #333;
+  font-size: 2rem;
+  font-weight: bold;
+}
+
+/* Questions list */
+.feedback-questions {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+/* Each question section */
+.feedback-question-row {
+  margin-bottom: 2rem; /* Increased margin for better spacing */
+}
+
+/* Question title */
+.feedback-question-title {
+  margin-bottom: 0.8rem; /* Increased space for better readability */
+  color: #444;
+  font-size: 1.3rem;
+  font-weight: 600;
+  line-height: 1.5;
+}
+
+/* Multiple choice options */
+.feedback-options label {
+  display: flex;
+  align-items: center;
+  margin-bottom: 0.8rem;
+  cursor: pointer;
+  font-size: 1.1rem;
+  color: #333;
+}
+
+/* Checkbox spacing */
+.feedback-options label input[type="checkbox"] {
+  margin-right: 0.7rem;
+  transform: scale(1.2); /* Bigger checkboxes for better interaction */
+}
+
+/* Comment Box */
+.feedback-comment-box {
+  width: 100%;
+  height: 100px; /* Increased height */
+  padding: 0.8rem;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  font-size: 1.1rem;
+  color: #333;
+  resize: vertical;
+  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* Submit button with more spacing */
+.feedback-submit-btn {
+  display: block;
+  width: 100%;
+  padding: 1rem;
+  font-size: 1.1rem;
+  color: #fff;
+  background-color: #007bff;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  text-align: center;
+  transition: background-color 0.3s ease;
+  margin-top: 20px; /* More spacing above the button */
+}
+
+.feedback-submit-btn:hover {
+  background-color: #0056b3;
+}
+
+/* Responsive Styling */
+@media (max-width: 768px) {
+  .feedback-form-container {
     width: 90%;
-    height: 80px;
-    padding: 0.5rem;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    font-size: 1rem;
-    color: #333;
-    resize: vertical;
-    box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1);
+    padding: 2rem;
   }
-  
-  /* Submit button */
+
+  .feedback-form-title {
+    font-size: 1.7rem;
+  }
+
+  .feedback-question-title {
+    font-size: 1.1rem;
+  }
+
+  .feedback-comment-box {
+    height: 90px;
+  }
+
   .feedback-submit-btn {
-    display: block;
-    width: 100%;
-    padding: 0.8rem;
     font-size: 1rem;
-    color: #fff;
-    background-color: #007bff;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    text-align: center;
-    transition: background-color 0.3s ease;
   }
-  
-  .feedback-submit-btn:hover {
-    background-color: #0056b3;
-  }
-  
-  /* Responsive styling */
-  @media (max-width: 768px) {
-    .feedback-form-container {
-      width: 90%;
-    }
-  
-    .feedback-form-title {
-      font-size: 1.5rem;
-    }
-  
-    .feedback-question-title {
-      font-size: 1rem;
-    }
-  
-    .feedback-submit-btn {
-      font-size: 0.9rem;
-    }
-  }
-  
+}
