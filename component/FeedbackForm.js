@@ -158,7 +158,9 @@ const FeedbackForm = () => {
   };
 
   if (loading) {
-    return <p>Loading...</p>;
+    return <div className="loader">
+    <span className="loader2"></span>
+  </div>
   }
 
   return (
