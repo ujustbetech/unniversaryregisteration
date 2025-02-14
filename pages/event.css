@@ -403,6 +403,7 @@ body {
   box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
 }
 
+
 .agendabutton {
   font-size: 14px;
   border-radius: 30px;
@@ -418,10 +419,22 @@ body {
   box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
 }
 
-.agendabutton :hover {
+/* Hover Effect */
+.agendabutton:hover {
   background-color: #e55a00;
   box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
 }
+
+/* Disabled Button Styling */
+.agendabutton:disabled {
+  background-color: #b3b3b3; /* Gray background */
+  color: #666666; /* Lighter text */
+  cursor: not-allowed; /* Disabled cursor */
+  box-shadow: none; /* Remove shadow */
+  opacity: 0.6;
+}
+
+
 
 .eventDetails {
   text-align: center;
