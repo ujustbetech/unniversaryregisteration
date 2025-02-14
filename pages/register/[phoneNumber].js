@@ -112,7 +112,7 @@ const RegisterPage = () => {
  
 
   useEffect(() => {
-    const targetIST = new Date("2025-02-13T18:00:00+05:30"); // 6:00 PM IST
+    const targetIST = new Date("2025-02-15T18:00:00+05:30"); // 6:00 PM IST
     const checkTime = () => {
       const now = new Date(); // Current time (UTC)
       if (now >= targetIST) {
