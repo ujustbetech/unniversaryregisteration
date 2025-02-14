@@ -62,7 +62,7 @@ const RegisterPage = () => {
   }, [phoneNumber]);
 
   useEffect(() => {
-    const allowedDate = new Date("2025-02-13");
+    const allowedDate = new Date("2025-02-14");
     const today = new Date();
     if (
       today.getFullYear() === allowedDate.getFullYear() &&
