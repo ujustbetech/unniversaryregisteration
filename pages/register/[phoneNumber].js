@@ -62,7 +62,7 @@ const RegisterPage = () => {
   }, [phoneNumber]);
 
   useEffect(() => {
-    const allowedDate = new Date("2025-02-14");
+    const allowedDate = new Date("2025-02-15");
     const today = new Date();
     if (
       today.getFullYear() === allowedDate.getFullYear() &&
@@ -224,7 +224,7 @@ const RegisterPage = () => {
               <Link href={`/feedback/${phoneNumber}`}>
                 <div className="agenda">
                 <button className="agendabutton" disabled={isDisabled}>
-      {isDisabled ? "Wait till 6:00 PM" : "Send Feedback"}
+      {isDisabled ? "Activates at 6:00 PM" : "Send Feedback"}
     </button>
                 </div>
                
