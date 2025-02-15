@@ -43,8 +43,8 @@ export default async function handler(req, res) {
                 {
                   type: 'location',
                   location: {
-                    name: 'UJustBe Enterprise',
-                    address: 'Kamdhenu Shopping Centre, Andheri',
+                    name: 'Celebrations Club',
+                    address: 'Lokhandwala, Andheri (W),Mumbai',
                     latitude: template.latitude,
                     longitude: template.longitude,
                   },
