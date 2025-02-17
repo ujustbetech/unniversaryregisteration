@@ -62,7 +62,7 @@ const RegisterPage = () => {
   }, [phoneNumber]);
 
   useEffect(() => {
-    const allowedDate = new Date("2025-02-15");
+    const allowedDate = new Date("2025-02-13");
     const today = new Date();
     if (
       today.getFullYear() === allowedDate.getFullYear() &&
@@ -214,7 +214,7 @@ const RegisterPage = () => {
           )}
 
           {/* Div 3: Send Feedback */}
-          {feedbackVisible && (
+         
             <ConstantLayout>
               <h1 className="welcomeText">Thankyou {userDetails?.[" Name"]}</h1>
               <h2 className="eventName">for attending the event!</h2>
@@ -223,15 +223,15 @@ const RegisterPage = () => {
               </h1>
               <Link href={`/feedback/${phoneNumber}`}>
                 <div className="agenda">
-                <button className="agendabutton" disabled={isDisabled}>
-      {isDisabled ? "Activates at 6:00 PM" : "Send Feedback"}
+                <button className="agendabutton" >
+     Send Feedback
     </button>
                 </div>
                
 
               </Link>
             </ConstantLayout>
-          )}
+         
         </>
       ) : (
         <div className="loader">
