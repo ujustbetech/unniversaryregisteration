@@ -1,4 +1,6 @@
 import React, { useEffect, useState } from "react";
+import ExportFeedback from "./ExportFeedback";
+import ExportButton from "./ExportFeedback";
 
 const RegisteredUsers = () => {
   const [users, setUsers] = useState([]);
@@ -33,11 +35,10 @@ const RegisteredUsers = () => {
       )}
       {!loading && (
         <section className="c-userslist box">
-          <h2>Registered Users</h2>
-          <button className="m-button-5" onClick={() => window.history.back()}>
-            Back
-          </button>
+        
 
+          <h2>Registered Users</h2>
+          <ExportButton/>
           {users.length === 0 ? (
             <p>No users registered yet.</p>
           ) : (
